@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="basketDAO">
+	<select id="insert" resultType="basketVO">
+		INSERT
+		INTO
+		bookbasket(bookNum,id,count)
+		VALUES(#{bookNum},#{id},1)
+	</select>
+	<select id="delete" resultType="basketVO">
+		DELETE
+		FROM bookbasket
+		WHERE
+		basketNum=#{basketNum} AND id=#{id}
+	</select>
+	<select id="listBasket" resultType="basketVO">
+		SELECT *
+		FROM bookbasket b , book c
+		WHERE b.bookNum = c.bookNum AND b.id = #{id}
+	</select>
+	
+	<select id="deleteAll" resultType="basketVO">
+		DELETE
+		FROM bookbasket
+		WHERE id=#{id}
+	</select>
+	
+	<select id="checkNun" resultType="basketVO">
+		SELECT *
+		FROM bookbasket
+		WHERE bookNum=#{bookNum} AND id=#{id}
+	</select>
+	
+	<select id="deleteAllbook" resultType="basketVO">
+		DELETE
+		FROM bookbasket
+		WHERE bookNum=#{bookNum}
+	</select>
+	
+	<select id="updateCount" resultType="basketVO">
+		UPDATE 
+		bookbasket set count= count + 1
+		WHERE bookNum=#{bookNum} AND id=#{id}
+	</select>
+	
+	<select id="updateCountUp" resultType="basketVO">
+		UPDATE 
+		bookbasket set count= count + 1
+		WHERE bookNum=#{bookNum} AND id=#{id}
+	</select>
+	
+	<select id="updateCountDown" resultType="basketVO">
+		UPDATE 
+		bookbasket set count= count - 1
+		WHERE bookNum=#{bookNum} AND id=#{id}
+	</select>
+</mapper>

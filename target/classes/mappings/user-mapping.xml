@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userDAO">
+
+	<select id="login" resultType="userVO">
+		SELECT *
+		FROM user
+		WHERE id= #{id} AND	password=#{password}
+	</select>
+	
+	<select id="join" resultType="userVO">
+		INSERT 
+		INTO user(id,password,name,phone,grade,admin) 
+		VALUES(#{id},#{password},#{name},#{phone},#{grade},#{admin})
+	</select>
+	
+	<select id="update" resultType="userVO">
+		UPDATE 
+		user set password = #{password}, phone=#{phone}
+		WHERE id=#{id}
+	</select>
+	
+	<select id="listUser" resultType="userVO">
+		SELECT *
+		FROM user
+	</select>
+	
+	<select id="userInfo" resultType="userVO">
+		SELECT *
+		FROM user
+		WHERE id=#{id}
+	</select>	
+	
+	<select id="listCreditcard" resultType="creditcardVO">
+		SELECT *
+		FROM creditcard
+		WHERE id=#{id}
+	</select>
+	
+	<select id="insertCreditcard" resultType="creditcardVO">
+		INSERT 
+		INTO creditcard(creditcardNum,license,creditcardKind,id) 
+		VALUES(#{creditcardNum},#{license},#{creditcardKind},#{id})
+	</select>
+	
+	<select id="deleteCreditcard" resultType="creditcardVO">
+		DELETE
+		FROM creditcard
+		WHERE creditcardNum=#{creditcardNum}
+	</select>
+	
+	<select id="listAddress" resultType="addressVO">
+		SELECT *
+		FROM address
+		WHERE id=#{id}
+	</select>
+	
+	<select id="insertAddress" resultType="addressVO">
+		INSERT 
+		INTO address(address,addressdetail,id,postCode) 
+		VALUES(#{address},#{addressdetail},#{id},#{postCode})
+	</select>
+	
+	<select id="deleteAddress" resultType="addressVO">
+		DELETE
+		FROM address
+		WHERE addressNum=#{addressNum}
+	</select>
+	
+	<select id="grade" resultType="userVO">
+		UPDATE 
+		user set grade=#{grade}
+		WHERE id=#{id}
+	</select>
+	
+	<select id="updatePoint" resultType="userVO">
+		UPDATE 
+		user set point = point + #{point}
+		WHERE id=#{id}
+	</select>
+</mapper>

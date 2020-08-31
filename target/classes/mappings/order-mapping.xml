@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orderDAO">
+	<select id="insert" resultType="orderVO">
+		INSERT 
+		INTO orders(id,orderDate,deliverAddress,creditcardNum) 
+		VALUES(#{id},#{orderDate},#{deliverAddress},#{creditcardNum})
+	</select>
+	
+	<select id="insertDetail" resultType="orderVO">
+		INSERT 
+		INTO orderdetail(bookNum,orderNum,deliverState,orderPrice,returnState,bookPicture,bookName,count,grade2) 
+		VALUES(#{bookNum},#{orderNum},#{deliverState},#{orderPrice},#{returnState},#{bookPicture},#{bookName},#{count},#{grade2})
+	</select>
+	
+	<select id="loadOrderNum" resultType="orderVO">
+		SELECT orderNum
+		FROM orders
+		WHERE id=#{id} AND orderDATE=#{orderDate} AND deliverAddress=#{deliverAddress}
+	</select>
+
+	<select id="orderConfirmation" resultType="orderVO">
+		SELECT *
+		FROM orders
+		WHERE id=#{id}
+		ORDER BY orderNum DESC
+	</select>
+	
+	<select id="orderConfirmationDetail" resultType="orderVO">
+		SELECT *
+		FROM orderdetail
+		WHERE orderNum=#{orderNum}
+	</select>
+	
+	<select id="allOrder" resultType="orderVO">
+		SELECT *
+		FROM orders b,orderdetail c
+		WHERE b.orderNum = c.orderNum
+		ORDER BY b.orderNum DESC
+	</select>
+	
+	<select id="delivery" resultType="orderVO">
+		UPDATE 
+		orderdetail set deliverState=#{deliverState}
+		WHERE detailNum=#{detailNum}
+	</select>
+	
+	<select id="delete" resultType="orderVO">
+	 	DELETE
+	 	FROM orders
+	 	WHERE orderNum = #{orderNum}
+	</select>
+	
+	<select id="deleteDetail" resultType="orderVO">
+	 	DELETE
+	 	FROM orderdetail
+	 	WHERE detailNum = #{detailNum}
+	</select>
+	
+	<select id="checkNun" resultType="orderVO">
+		SELECT *
+		FROM orderdetail
+		WHERE orderNum=#{orderNum}
+	</select>
+	
+	<select id="returnState" resultType="orderVO">
+		UPDATE 
+		orderdetail set returnState=#{returnState}
+		WHERE detailNum=#{detailNum}
+	</select>
+	
+	<select id="returnAll" resultType="orderVO">
+		SELECT *
+		FROM orders b,orderdetail c
+		WHERE b.orderNum = c.orderNum AND returnState = 1
+	</select>
+	
+	<select id="userOrder" resultType="orderVO">
+		SELECT *
+		FROM orders b,orderdetail c
+		WHERE b.orderNum = c.orderNum AND b.id=#{id}
+		ORDER BY b.orderDate DESC
+	</select>
+	
+	<select id="price" resultType="orderVO">
+		SELECT *
+		FROM orders b,orderdetail c
+		WHERE b.orderNum = c.orderNum AND b.id=#{id} AND c.bookNum=#{bookNum}
+	</select>
+	
+	<select id="bookEmpty" resultType="orderVO">
+		SELECT *
+		FROM orderdetail
+		WHERE bookNum=#{bookNum}
+	</select>
+	
+	<select id="grade2" resultType="orderVO">
+		SELECT *
+		FROM orderdetail
+		WHERE bookNum=#{bookNum}
+	</select>
+	
+	<select id="insertGrade" resultType="orderVO">
+		UPDATE orders a INNER JOIN orderdetail b
+		ON a.orderNum = b.orderNum
+		SET b.grade2=#{grade2}
+		WHERE a.id=#{id} AND b.bookNum=#{bookNum}
+	</select>
+</mapper>

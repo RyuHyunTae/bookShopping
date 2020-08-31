@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bookDAO">
+	<select id="insert" resultType="bookVO">
+		INSERT 
+		INTO book(bookName,bookPrice,bookComment,bookPicture,bookCount) 
+		VALUES(#{bookName},#{bookPrice},#{bookComment},#{bookPicture},#{bookCount})
+	</select>
+	<select id="delete" resultType="bookVO">
+		DELETE
+		FROM book
+		WHERE bookNum=#{bookNum}
+	</select>
+	<select id="updateCount" resultType="orderVO">
+		UPDATE 
+		book set bookCount= bookCount - 1
+		WHERE bookNum=#{bookNum}
+	</select>
+	<select id="listBook" resultType="bookVO">
+		SELECT *
+		FROM book
+	</select>
+	<select id="listSelect" resultType="bookVO">
+		SELECT *
+		FROM book
+		WHERE bookName like CONCAT('%',#{bookName},'%')
+	</select>
+	<select id="oneBook" resultType="bookVO">
+		SELECT *
+		FROM book
+		WHERE bookNum=#{bookNum}
+	</select>
+	
+	<select id="allBook" resultType="bookVO">
+		SELECT *
+		FROM book
+	</select>
+	
+	<select id="update" resultType="bookVO">
+		UPDATE 
+		book set bookName=#{bookName} , bookPrice = #{bookPrice} , bookComment = #{bookComment} , bookCount=#{bookCount}
+	</select>
+	
+	<select id="updateGrade" resultType="orderVO">
+		UPDATE 
+		book set bookGrade= #{bookGrade}
+		WHERE bookNum=#{bookNum} AND id=#{id}
+	</select>
+	
+</mapper>
